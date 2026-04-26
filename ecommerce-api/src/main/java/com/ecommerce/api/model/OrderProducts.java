@@ -23,8 +23,7 @@ public class OrderProducts implements Serializable {
 
     public OrderProducts() {}
 
-    public OrderProducts(Long id, UserEntity user,  List<Product> products) {
-        this.id = id;
+    public OrderProducts(UserEntity user,  List<Product> products) {
         this.user = user;
         this.products = products;
     }
@@ -39,5 +38,9 @@ public class OrderProducts implements Serializable {
 
     public List<Product> getProducts() {
         return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

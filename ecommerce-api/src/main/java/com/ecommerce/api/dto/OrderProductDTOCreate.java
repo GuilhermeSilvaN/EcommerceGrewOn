@@ -6,13 +6,11 @@ import com.ecommerce.api.model.UserEntity;
 
 import java.util.List;
 
-public record OrderProductDTO (
-        Long id,
+public record OrderProductDTOCreate (
         UserEntity userEntity,
         List<Product> products
 ) {
-    public OrderProductDTO(Long id, UserEntity userEntity, List<Product> products) {
-        this.id = id;
+    public OrderProductDTOCreate(UserEntity userEntity, List<Product> products) {
         this.userEntity = userEntity;
         this.products = products;
     }
