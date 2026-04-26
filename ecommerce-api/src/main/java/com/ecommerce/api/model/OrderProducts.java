@@ -13,7 +13,7 @@ public class OrderProducts implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     @ManyToOne
     private UserEntity user;
@@ -23,13 +23,13 @@ public class OrderProducts implements Serializable {
 
     public OrderProducts() {}
 
-    public OrderProducts(String id, UserEntity user,  List<Product> products) {
+    public OrderProducts(Long id, UserEntity user,  List<Product> products) {
         this.id = id;
         this.user = user;
         this.products = products;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
