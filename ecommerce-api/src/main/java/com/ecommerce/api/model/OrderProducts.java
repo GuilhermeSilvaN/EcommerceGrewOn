@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name="tb_order")
 public class OrderProducts implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
