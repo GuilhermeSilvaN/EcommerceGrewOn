@@ -1,11 +1,12 @@
 package com.ecommerce.api.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="tb_product")
@@ -24,8 +25,16 @@ public class Product implements Serializable {
     private Double price;
     private String description;
 
-    @ManyToOne
-    private OrderProducts orderProducts;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name="TB_PRODUCT_ORDER",
+            joinColumns=@JoinColumn(name="product_id"),
+            inverseJoinColumns=@JoinColumn(name="category_id")
+    )
+    private Set<Category> categories = new HashSet<Category>();
+
+    @OneToMany(mappedBy="id.product")
+    private OrderItem orderItem;
 
     public Product() {}
 

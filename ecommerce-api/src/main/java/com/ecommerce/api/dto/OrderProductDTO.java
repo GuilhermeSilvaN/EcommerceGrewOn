@@ -1,6 +1,5 @@
 package com.ecommerce.api.dto;
 
-import com.ecommerce.api.model.OrderProducts;
 import com.ecommerce.api.model.Product;
 import com.ecommerce.api.model.UserEntity;
 

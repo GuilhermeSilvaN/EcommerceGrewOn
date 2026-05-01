@@ -8,6 +8,7 @@ import com.ecommerce.api.mapper.MapperUserEntity;
 import com.ecommerce.api.model.UserEntity;
 import com.ecommerce.api.repository.UserEntityRepository;
 import com.ecommerce.api.service.JwtService;
+import com.ecommerce.api.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,22 +16,27 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ObjectInputFilter;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("login")
 public class AuthController {
     private final UserEntityRepository userEntityRepository;
+    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
     public  AuthController(
             UserEntityRepository userRepository,
+            UserService userService,
             PasswordEncoder passwordEncoder,
             AuthenticationManager authenticationManager,
             JwtService jwtService
     ) {
         this.userEntityRepository = userRepository;
+        this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
@@ -73,8 +79,6 @@ public class AuthController {
 
     }
 
-
-
     @PostMapping("/register")
     public ResponseEntity<UserEntityDTO> registerUser(@RequestBody UserEntityDTOCreate userEntityDTOCreate) {
         UserEntity userEntity = MapperUserEntity.UserEntityDTOCreateToUserEntity(userEntityDTOCreate);
@@ -90,5 +94,16 @@ public class AuthController {
     @GetMapping
     public ResponseEntity<String> hello () {
         return ResponseEntity.ok().body("Hello World mesmo");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserEntityDTO> update( @PathVariable Long id, @RequestBody UserEntityDTOCreate userEntityDTOCreate){
+        return ResponseEntity.status(201).body(userService.update(id, userEntityDTOCreate));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        userService.deleteUserEntity(id);
+        return ResponseEntity.noContent().build();
     }
 }

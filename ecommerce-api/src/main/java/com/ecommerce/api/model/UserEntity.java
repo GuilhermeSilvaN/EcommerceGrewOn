@@ -1,12 +1,14 @@
 package com.ecommerce.api.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="tb_user")
@@ -30,6 +32,10 @@ public class UserEntity implements Serializable {
 
     @Column(name="is_active")
     private Boolean isActive;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders = new ArrayList<>();
 
     public UserEntity() {}
 
@@ -68,4 +74,19 @@ public class UserEntity implements Serializable {
 
     public void setIsActive(Boolean isActive) { this.isActive = isActive; }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity that = (UserEntity) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 }
